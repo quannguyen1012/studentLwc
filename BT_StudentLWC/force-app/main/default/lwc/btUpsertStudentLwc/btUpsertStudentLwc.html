@@ -1,0 +1,23 @@
+<template>
+    <div>
+        <lightning-input name="Ho_hoc_sinh__c" label="Họ" value={student.Ho_hoc_sinh__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input name="Ten_hoc_sinh__c" label="Ten" value={student.Ten_hoc_sinh__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input type="checkbox" name="Gioi_tinh__c" label="Giới tính" value={student.Gioi_tinh__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input type="date" name="Ngay_sinh__c" label="ngày sinh" value={student.Ngay_sinh__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input name="Diem1__c" label="Điểm hóa" value={student.Diem1__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input name="Diem2__c" label="Điểm lý" value={student.Diem2__c} onchange={handleFieldChange}></lightning-input>
+        <lightning-input name="Diem3__c" label="Điểm toán" value={student.Diem3__c} onchange={handleFieldChange}></lightning-input>
+        <select name="Lop__c" onchange={handleFieldChange}>
+            <option>--Chọn Lớp--</option>
+            <template if:true={getLops}>
+                <template for:each={getLops.data} for:item="lop">
+                    <option key={lop.Id} value={lop.Id}>{lop.Name}</option>
+                </template>
+            </template>
+        </select>
+        <br/><br/>
+
+        <lightning-button label="Save" variant="brand" onclick={handleSaveClick}></lightning-button>
+
+    </div>
+</template>

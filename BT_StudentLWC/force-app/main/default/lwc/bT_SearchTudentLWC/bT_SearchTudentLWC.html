@@ -1,0 +1,98 @@
+<template>
+    <template if:true={homePage}>
+        <div>
+            <lightning-input name="searchName" label="Tên" value={searchName} onchange={handleNameChange}></lightning-input>    
+            <lightning-combobox
+                name="searchLop"
+                label="Lớp"
+                value={searchLop}
+                options={options}
+                onchange={handleLopChange}
+            ></lightning-combobox>
+            <lightning-input type="date" name="searchDateFrom" label="Ngay sinh từ" value={handleDateFChange} onchange={handleDateFChange}></lightning-input>
+            <lightning-input type="date" name="searchDateTo" label="đến" value={searchDateTo} onchange={handleDateTChange}></lightning-input>
+            <lightning-input type="checkbox" name="sortByName" label="xắp xếp theo tên" value={sortByName} onchange={handleSortChange}></lightning-input> 
+            <br/>
+            <lightning-button label="Search" onclick={handleSearch} ></lightning-button>
+
+            <lightning-button label="Thêm mới" variant="brand" onclick={handleUpsert} ></lightning-button>
+
+            <lightning-button label="Xóa" variant="brand" onclick={handleSelectedDelete} ></lightning-button>
+
+        </div>
+        <br/><br/>
+        <div>
+            <table title="Student List" border="1px solid black">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Họ</th>
+                        <th>Tên</th>
+                        <th>Lớp</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Diểm hóa</th>
+                        <th>Diểm Lý</th>
+                        <th>Diểm Toán</th>
+                        <th>Tình Trạng</th>
+                        <th>Xếp loại</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={students} for:item="student">
+                        <tr key={student.Id}>
+                            <td>
+                                <lightning-input type="checkbox" value={student.Id} onchange={handleChechDelete}></lightning-input> 
+                            </td>
+                            <td>{student.Ho_hoc_sinh__c}</td>
+                            <td>{student.Ten_hoc_sinh__c}</td>
+                            <td>{student.Lop__r.Name}</td>
+                            <td>
+                                <template if:true={student.Gioi_tinh__c}>
+                                    <b>Nam</b>
+                                </template>
+                                <template if:false={student.Gioi_tinh__c}>
+                                    <b>Nữ</b>
+                                </template>
+                            </td>
+                            <td>{student.Ngay_sinh__c}</td>
+                            <td>{student.Diem1__c}</td>
+                            <td>{student.Diem2__c}</td>
+                            <td>{student.Diem3__c}</td>
+                            <td>{student.Tinh_Trang__c}</td>
+                            <td>{student.Xep_loai__c}</td>
+                            <td>
+                                <lightning-button label="Edit" variant="brand" value={student.Id} onclick={handleUpsert}></lightning-button>
+                            </td>
+                            <td>
+                                <lightning-button label="Detail" variant="Neutral" value={student.Id} onclick={handleDetail}></lightning-button>
+                            </td>
+                            <td>
+                                <lightning-button label="Xóa" variant="brand" value={student.Id} onclick={handleDelete}></lightning-button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <div>
+                <lightning-button label="First" onclick={goToFirstPage} variant="neutral"></lightning-button>
+                <lightning-button label="Previous" onclick={goToPreviousPage} variant="neutral"></lightning-button>
+                <template for:each={pageNumbers} for:item="pageNumber">
+                    <lightning-button key={pageNumber} label={pageNumber} value={pageNumber} onclick={setPage} variant="neutral"></lightning-button>
+                </template>
+                <lightning-button label="Next" onclick={goToNextPage} variant="neutral"></lightning-button>
+                <lightning-button label="Last" onclick={goToLastPage} variant="neutral"></lightning-button>
+            </div>
+        </div>
+    </template>
+    <template if:true={upsertPage}>
+        <lightning-button label="Back"  onclick={back}></lightning-button>
+        <c-bT-upsert-student-lwc record-id={recordId}></c-bT-upsert-student-lwc>
+    </template>
+
+    <template if:true={detailPage}>
+        <lightning-button label="Back"  onclick={back}></lightning-button>
+        <c-bT-detail-student-lwc record-id={recordId}></c-bT-detail-student-lwc>
+    </template>
+</template>

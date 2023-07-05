@@ -1,0 +1,54 @@
+<template >
+    <template if:true={detailPage}>
+        <template if:true={student}>
+            <div style="background: white;">
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Họ</label>
+                    <b>{student.Ho_hoc_sinh__c}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Tên</label>
+                    <b>{student.Ten_hoc_sinh__c}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Lớp</label>
+                    <b>{student.Lop__r.Name}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Giới tính : </label>
+                    <template if:true={student.Gioi_tinh__c}>
+                        <b>Nam</b>
+                    </template>
+                    <template if:false={student.Gioi_tinh__c}>
+                        <b>Nữ</b>
+                    </template>
+                </div>
+                <div >
+                    <label style="margin: 10px 20px 20px 15px;">Ngày sinh</label>
+                    <b>{student.Ngay_sinh__c}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Điểm hóa</label>
+                    <b>{student.Diem1__c}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Điểm lý</label>
+                    <b>{student.Diem2__c}</b>
+                </div>
+                <div>
+                    <label style="margin: 10px 20px 20px 15px;">Điểm Toán</label>
+                    <b>{student.Diem3__c}</b>
+                </div>
+                <div>
+                    <lightning-button label="Edit" variant="brand" value={student.Id} onclick={handleUpdate}></lightning-button>
+                </div>
+                <div>
+                    <lightning-button label="Xóa" variant="brand" onclick={handleDelete}></lightning-button>
+                </div>
+            </div>
+        </template>
+    </template>
+    <template if:true={updatePage}>
+        <c-bt-upsert-student-lwc record-id={student.Id}></c-bt-upsert-student-lwc>
+    </template>
+</template>
